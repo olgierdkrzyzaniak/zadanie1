@@ -26,8 +26,11 @@ const createUser = ((req, res)=>{
 })
 
 const updateUser = ((req, res) => {
-    console.log(req.params)
     const id = Number(req.params.userID)
+    const user = data.users.find(user => user.id === id);
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
     const index = data.users.findIndex(user => user.id === id)
     const updatedUser = {
         id: data.users[index].id,
@@ -42,6 +45,11 @@ const updateUser = ((req, res) => {
 
 const deleteUser = ((req, res) => {
     const id = Number(req.params.userID)
+    const user = data.users.find(user => user.id === id);
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+
     const index = data.users.findIndex(user => user.id === id)
     data.users.splice(index,1);
     fs.writeFileSync("data.json", JSON.stringify(data));

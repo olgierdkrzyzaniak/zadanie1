@@ -29,6 +29,11 @@ const createProduct = ((req, res)=>{
 
 const updateProduct = ((req, res) => {
     const id = Number(req.params.productID)
+    const product = data.products.find(product => product.id === id);
+    if (!product) {
+        return res.status(404).send('Product not found');
+    }
+
     const index = data.products.findIndex(product => product.id === id)
     const updatedProduct = {
         id: data.products[index].id,
@@ -39,11 +44,16 @@ const updateProduct = ((req, res) => {
 
     data.products[index] = updatedProduct
     fs.writeFileSync("data.json", JSON.stringify(data));
-    res.status(200).json('Product updated')
+    res.status(200).json('Product updated');
 })
 
 const deleteProduct = ((req, res) => {
     const id = Number(req.params.productID)
+    const product = data.products.find(product => product.id === id);
+    if (!product) {
+        return res.status(404).send('Product not found');
+    }
+    
     const index = data.products.findIndex(product => product.id === id)
     data.products.splice(index,1)
     fs.writeFileSync("data.json", JSON.stringify(data));
