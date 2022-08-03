@@ -17,15 +17,14 @@ const getProduct = ((req, res) => {
 
 const createProduct = ((req, res)=>{
   const newProduct = {
-    // niefajnie zrobione są te id
-    id: data.products.length + 1,
+    id: data.products.length ? data.products[data.products.length - 1].id + 1 : 1,
     name: req.body.name,
     price: req.body.price,
     amount: req.body.amount
   } 
   data.products.push(newProduct);
   fs.writeFileSync("data.json", JSON.stringify(data));
-  res.json(newProduct)
+  res.status(200).json(newProduct)
 })
 
 const updateProduct = ((req, res) => {
