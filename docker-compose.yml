@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  postgres:
+    container_name: zadanie1
+    image: postgres:14
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: opensesame
+      POSTGRES_DB: zadanie-test
+    ports:
+      - 5432:5432
